@@ -1,0 +1,16 @@
+#include<stdio.h>
+int num(int n)
+{if(n==1)
+{return 1;
+}
+else
+{return 2*num(n-1)+1;
+}
+ }
+ int main()
+ {int n;
+ printf("请输入有几个盘子:");
+ scanf("%d",&n);
+ printf("总共要移动:%d次",num(n));
+ return 0;
+  } 

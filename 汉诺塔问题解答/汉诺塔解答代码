@@ -1,0 +1,30 @@
+#include <stdio.h>
+void move(int n,int a,int b,int c)  
+{
+	if(n==1)
+		printf("%d——>%d\n",a,c);
+	else
+	{
+		move(n-1,a,c,b);  
+		printf("%d——>%d\n",a,c);
+		move(n-1,b,a,c);  
+	}
+}
+int num(int n)
+{if(n==1)
+{return 1;
+}
+else
+{return 2*num(n-1)+1;
+}
+ }
+int main()
+{
+	int n; 
+	printf("请输入盘子的个数:"); 
+	scanf("%d",&n);
+	printf("盘子移动的步骤为:\n");
+	move(n,1,2,3);  
+	printf("总共要移动:%d次",num(n));
+	return 0;
+}

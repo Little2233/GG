@@ -1,0 +1,62 @@
+#include<iostream>
+using namespace std;
+int  getradixvalue(int value,int radix,int radixcount){
+	int radixvalue=value;
+	for(int i=0;i<radixcount;++i){
+		radixvalue=radixvalue/radix;//从个位数开始排序 
+	}
+	radixvalue=radixvalue%radix;//对求余后的数从小到大排序 
+	return radixvalue;
+}
+bool radixsort(int array[],int arrayLen,int radix){
+	if(arrayLen<=1){
+		return true;
+	}
+	int max=array[0];
+	for(int i=1;i<arrayLen;++i){//通过循环寻找数组中最大的数字 
+		if(max<array[i]){
+			max=array[i];
+		}
+	}
+	int radixcount=0;
+	while((max/=radix)>0){//计算出最大值的位数 
+		++radixcount;
+	}
+	int *countradixbucket=new int [radix]();//创建桶 
+	int *tempArray=new int[arrayLen]();//建立临时数组 
+	for(int radixIndex=0;radixIndex<=radixcount;++radixIndex){
+		for(int j=0;j<arrayLen;++j){
+			++countradixbucket[getradixvalue(array[j],radix,radixIndex)];//统计每个数字出现次数 
+		}
+		for(int k=1;k<radix;++k){
+			countradixbucket[k]+=countradixbucket[k-1];//将全部数字出现次数累加 
+		}
+		for(int i=arrayLen-1;i>=0;--i){
+			tempArray[--countradixbucket[getradixvalue(array[i],radix,radixIndex)]]=array[i];//将数字从个数开始进行排序 
+		}
+		for(int m=0;m<arrayLen;++m){
+			array[m]=tempArray[m];//将临时数组中的值放入原数组当中 
+		}
+		for(int n=0;n<radix;++n){
+			countradixbucket[n]=0;//将桶内赋0 
+		}
+	}
+	delete []countradixbucket;//手动释放建立数组的空间 
+	delete []tempArray;
+	return true;
+}
+int print(int array[],int arrayLen){
+	int i;
+	for(i=0;i<arrayLen;++i){
+		cout<<array[i]<<" ";
+	}
+	cout<<endl;
+}
+int main(){
+	int array[5]={16,45,23,11,33};
+	cout<<"排序之前数组为:"<<endl;
+	print(array,5);
+	cout<<"排序之后的数组为:"<<endl;
+	radixsort(array,5,10);
+	print(array,5);
+}

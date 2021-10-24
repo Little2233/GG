@@ -1,0 +1,30 @@
+#include<iostream>
+using namespace std;
+void select(int array[],int arrLen){
+	int i,j,t;
+	for(i=0;i<arrLen;i++){
+		 t=i;//找到设初值的数组下标 
+		for(j=i+1;j<arrLen;j++){
+			if(array[t]>array[j]){
+			t=j;}//将比初值小的数下标赋值给J 
+		}
+	int temp=array[t];//将这两个数组的值进行交换 
+	array[t]=array[i];
+	array[i]=temp;
+}
+}
+void print(int array[],int arrLen){
+	int i;
+	for(i=0;i<arrLen;i++){
+		cout<<array[i]<<" ";
+	}
+	cout<<endl;
+}
+int main(){
+	int array[5]={6,2,8,13,9};
+	cout<<"选择排序前数组为:"<<endl;
+	print(array,5);
+	cout<<"选择排序后的数组为:"<<endl;
+	select(array,5);
+	print(array,5);
+}

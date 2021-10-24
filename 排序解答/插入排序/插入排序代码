@@ -1,0 +1,38 @@
+#include<iostream>
+using namespace std;
+bool insert(int array[],int arrLen){
+	if(arrLen<0){
+		cout<<"please check you number"<<endl;
+		return false; 
+	}
+	int i;
+	for(i=1;i<=arrLen;i++){//从头到尾依次取数组内的元素 
+	int insertNum=array[i];
+	int Index=i-1;//数组内元素所对应的物理序号 
+	for(Index=i-1;Index>=0;Index--){//将取得数组的元素依次和数组内元素比较 
+		if(insertNum>array[Index]){//如果插入的元素比较大 
+			array[Index+1]=array[Index];//则将元素小的放到后面 
+		}
+		else{
+			break;//如果插入元素比较小则不变，终止此次循环 
+		}
+	}
+	array[Index+1]=insertNum;//最后将大的元素放到前面 
+}
+return true;
+}
+void print(int array[],int arrLen){
+	int i;
+	for(i=0;i<arrLen;i++){
+		cout<<array[i]<<" ";
+	}
+	cout<<endl; 
+}
+int main(){
+	int array[5]={54,22,15,44,34};
+	cout<<"原来数组为:"<<endl;
+	print(array,5);
+	insert(array,5);
+	cout<<"插入排序后数组为:"<<endl;
+	print(array,5);
+}

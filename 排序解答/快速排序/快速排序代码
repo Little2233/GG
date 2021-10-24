@@ -1,0 +1,38 @@
+#include<stdio.h>
+int a[101],n;
+void quicksort(int left,int right){//定义函数，从数组最左右设置标兵 
+	int i,j,t,temp;
+	if(left>right)
+	return ;
+	temp=a[left];//设置准基数 
+	i=left;
+	j=right;
+	while(i!=j){
+		while(a[j]>=temp&&j>i)//从右往左找 
+		j--;
+		while(a[i]<=temp&&i<j)//从左往右找 
+		i++;
+		if(i<j){//交换两个数在数组中的位置（当哨兵i和j没有相遇时） 
+			t=a[j];
+			a[j]=a[i];
+			a[i]=t;
+		}
+	}
+		a[left]=a[i];//最终基数归位 
+		a[i]=temp;
+		quicksort(left,i-1);//继续处理左边，相当于一个递归过程 
+		quicksort(i+1,right);//继续处理右边，相当于一个递归过程 
+	}
+	int main(){
+		int i;
+		int n;
+		printf("请输入数组大小:");
+		scanf("%d",&n);
+		for(i=1;i<=n;i++)
+		scanf("%d",&a[i]);
+		quicksort(1,n);
+		printf("排序后的数组为:");
+		for(i=1;i<=n;i++)
+		printf("%d ",a[i]);
+	}
+	

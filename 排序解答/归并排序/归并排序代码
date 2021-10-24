@@ -1,0 +1,68 @@
+#include<iostream>
+#include<math.h>
+using namespace std;
+bool merge(int array[],int start,int middle,int end){
+	int arrLen=end-start;//计算数组的长度 
+	if(arrLen<2){
+		cout<<"please check you  numbers."<<endl; 
+		return false;
+	}
+	int *temp=new int (arrLen);//创建临时数组空间 
+	int i=start;
+	int j=middle;
+	int tempIndex=0;//设临时数组的下标 
+	while(i<middle&&j<end){
+		if(array[i]>array[j]){//当大于时将array[j]放入临时数组 
+			temp[tempIndex]=array[j];
+			j++;
+		}
+		else{
+			temp[tempIndex]=array[i];//当小于时将array[i]放入临时数组 
+			i++;
+		}
+		tempIndex++;//每放入一个数，临时数组内空间加1； 
+	}
+	while(i<middle){
+		temp[tempIndex++]=array[i++];//当进行前半段十足排序时，将前半段元素放入数组 
+	}
+	while(j<end){
+		temp[tempIndex++]=array[j++];//当进行后半段数组排序时，将后半段元素放入数组 
+	}
+	for((tempIndex=0,i=start);(tempIndex<arrLen&&i<end);(tempIndex++,i++)){
+		array[i]=temp[tempIndex];//将排好序的临时数组的值放入原来的数组当中 
+	}
+	delete []temp;//手动释放创建的临时数组 
+	temp=NULL;
+	return true;
+}
+bool mergesort(int array[],int start,int end){
+	int arrLen=end-start;//计算数组长度 
+	if(arrLen<0){
+		cout<<"please  check you numbers."<<endl;
+		return false; 
+	}
+	if(arrLen==0||arrLen==1){
+		return true;
+	}
+	int middle=start+floor(arrLen/2);//计算中间值 
+	mergesort(array,start,middle);//将首元素和中间元素之间进行计算中间值 
+	mergesort(array,middle,end);//将中间元素和尾元素之间进行计算中间值 
+	return merge(array,start,middle,end); 
+}
+void print(int array[],int arrLen){
+	int i;
+	for(i=0;i<arrLen;i++){
+		cout<<array[i]<<" "; 
+	}
+	cout<<endl; 
+}
+int main(){
+	int array[]={75,23,12,46,9};
+	int arrLen=sizeof(array)/sizeof(int);
+	cout<<"数组排序前为:"<<endl;
+	print(array,arrLen);
+	cout<<"数组排序之后为:"<<endl; 
+	mergesort(array,0,arrLen);
+	print(array,arrLen);
+	
+}

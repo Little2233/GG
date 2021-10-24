@@ -1,0 +1,43 @@
+#include<iostream>
+#include<malloc.h>
+using namespace std;
+void Bubble(int array[],int arrLen){
+	int i,j,temp;
+	for(i=1;i<=arrLen;i++){// 从头开始取数组内元素 
+		for(j=0;j<arrLen-i;j++){//从第一位开始比较直到最后一个尚未归位的数 
+			if(array[j]>array[j+1]){//如果前面的数大于后面的数 
+			temp=array[j];//则交换他们的数 
+			array[j]=array[j+1];
+			array[j+1]=temp;	
+			}
+		}
+	}
+}
+void print(int array[],int arrLen){
+	int i;
+	for(i=0;i<arrLen;i++){
+		cout<<array[i]<<" ";
+	}
+	cout<<endl;
+}
+void getNum(int array[],int i){
+		int n;
+	if(n>5){
+		cout<<"你输入有错误，请重新输入"<<endl;
+	}
+	else{
+		cout<<"数组中第"<<n<<"位的数字为"<<array[i]<<endl;
+	}
+}
+int main(){
+	int n;
+	int array[5]={4,12,8,54,23};
+	cout<<"原来数组为:"<<endl;
+	print(array,5);
+	Bubble(array,5);
+	cout<<"排序后数组为:"<<endl;
+	print(array,5);
+	cout<<"输入你想找数字第几位数字:"<<endl;
+	cin>>n; 
+	getNum(array,n-1);
+}

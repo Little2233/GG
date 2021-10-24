@@ -1,0 +1,80 @@
+#include<iostream>
+#include<string.h>
+using namespace std;
+bool insertsort(int array[],int arrLen){
+	if(arrLen<0){
+		cout<<"please check you number"<<endl;
+		return false; 
+	}
+	int i;
+	for(i=1;i<=arrLen;i++){//从头到尾依次取数组内的元素 
+	int insertNum=array[i];
+	int Index=i-1;//数组内元素所对应的物理序号 
+	for(Index=i-1;Index>=0;Index--){//将取得数组的元素依次和数组内元素比较 
+		if(insertNum>array[Index]){//如果插入的元素比较大 
+			array[Index+1]=array[Index];//则将元素小的放到后面 
+		}
+		else{
+			break;//如果插入元素比较小则不变，终止此次循环 
+		}
+	}
+	array[Index+1]=insertNum;//最后将大的元素放到前面 
+}
+return true;
+}
+bool bucksort(int array[],int arrLen,int bucksize){
+	if(arrLen<2){
+		return true;
+	}
+	int min=array[0];//定义初值为最大值 
+	int max=array[0];
+	for(int i=1;i<arrLen;i++){
+		if(min>array[i]){
+			min=array[i];
+		}
+		else if(max<array[i]){
+			max=array[0];
+		}
+	}//经过循环后找出数组里的最大值和最小值 
+	int **bucket=new int *[bucksize]();//定义二维数组，一个定义为桶装的范围，另一个定义为装在第几个桶内 
+	int *bucketLen=new int [bucksize]();//当前桶存放数据的个数 
+	int buckscope=int ((max-min)/bucksize)+1;//确定桶的个数 
+	for(int j=0;j<bucksize;j++){
+		bucket[j]=new int [arrLen]();//开创桶的空间 
+	}
+	int mapIndex=-1;
+	for(int k=0;k<arrLen;k++){
+		mapIndex=int ((array[k]-min)/buckscope);//将每个数减去最小数除以10来判断位于第几个桶  
+		bucket[mapIndex][bucketLen[mapIndex]++]=array[k]; //将数位于第几个桶内后将桶内数空间加1 
+	}
+	int arrayIndex=0;
+	for(int t=0;t<bucksize;t++){
+		if(bucketLen[t]>0){//说明有数据进行桶中 
+			insertsort(bucket[t],bucketLen[t]);
+			for(int m=0;m<bucketLen[t];m++){
+				array[arrayIndex++]=bucket[t][m];//将数据放回原来数组 
+			}
+		}
+		delete []bucket[t];//手动释放数组 
+		bucket [t]=NULL;
+	}
+	delete []bucket;
+	delete []bucketLen;
+	return true;
+} 
+void print(int array[],int arrLen){
+	int  i;
+	for(i=0;i<arrLen;i++){
+		cout<<array[i]<<" ";
+	} 
+	cout<<endl;
+}
+ 
+int main(){
+	int array[5]={56,22,12,7,0};
+	cout<<"排序之前数组为:"<<endl;
+	print(array,5);
+	cout<<"排序数组之后:"<<endl; 
+	bucksort(array,5,10);
+	print(array,5);
+}
